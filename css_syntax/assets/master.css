@@ -1,5 +1,6 @@
 body {
   font-family: arial, sans-serif;
+  background-color: green;
 }
 
 h1 {
@@ -8,4 +9,26 @@ h1 {
 
 h2 {
   font-size: 32px;
+}
+
+.ingredients-list {
+  list-style: square inside;
+}
+
+ol {
+  list-style: armenian;
+}
+
+header > img {
+  width: 100px;
+}
+
+ul li a {
+  color: inherit;
+}
+
+.user_review {
+  font-size: 30px;
+  font-style: oblique;
+  font-family: fantasy;
 }
