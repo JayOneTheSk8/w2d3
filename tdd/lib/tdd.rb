@@ -54,8 +54,36 @@ class TowersOfHanoi
     @towers = [[3, 2, 1], [], []]
   end
 
+  def render
+    p self.towers
+  end
+
+  def play
+    system('clear')
+    puts "Welcome to Towers of Hanoi!"
+    move_count = 0
+    until won?
+      render
+      begin
+        puts 'Were would you like to move from?'
+        from = Integer(gets.chomp) - 1
+        puts 'Where would you like to move to?'
+        to = Integer(gets.chomp) - 1
+        move(from, to)
+      rescue => e
+        puts e.message
+        retry
+      end
+      move_count += 1
+      system('clear')
+    end
+    render
+    puts 'YOU WIN!'
+    puts "It took #{move_count} moves to complete."
+  end
 
   def move(from, to)
+    raise 'Tower is non-existent' unless [from, to].all? { |pos| pos.between?(0, 2) }
     raise 'That is the same tower!' if from == to
     if valid?(from, to)
       self.towers[to] << self.towers[from].pop
