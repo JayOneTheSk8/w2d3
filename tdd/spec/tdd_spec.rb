@@ -73,6 +73,10 @@ describe TowersOfHanoi do
       expect{ game.move(0, 0) }.to raise_error("That is the same tower!")
     end
 
+    it 'does not allow you to move from an empty tower' do
+      expect{ game.move(2, 1) }.to raise_error('Tower is empty')
+    end
+
     it "raises an error if the tower picked is non-existent" do
       expect{ game.move(3, 0) }.to raise_error("Tower is non-existent")
       expect{ game.move(0, 3) }.to raise_error("Tower is non-existent")

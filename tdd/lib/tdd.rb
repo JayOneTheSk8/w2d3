@@ -1,3 +1,5 @@
+
+
 class Array
   def my_uniq
     self.reduce([]) { |uniques, el| uniques.include?(el) ? uniques : uniques << el }
@@ -65,9 +67,9 @@ class TowersOfHanoi
     until won?
       render
       begin
-        puts 'Were would you like to move from?'
+        puts 'Were would you like to move from? (1, 2 or 3)'
         from = Integer(gets.chomp) - 1
-        puts 'Where would you like to move to?'
+        puts 'Where would you like to move to? (1, 2 or 3)'
         to = Integer(gets.chomp) - 1
         move(from, to)
       rescue => e
@@ -83,18 +85,18 @@ class TowersOfHanoi
   end
 
   def move(from, to)
-    raise 'Tower is non-existent' unless [from, to].all? { |pos| pos.between?(0, 2) }
-    raise 'That is the same tower!' if from == to
-    if valid?(from, to)
-      self.towers[to] << self.towers[from].pop
-    else
-      raise 'You cannot move atop a smaller disc!'
-    end
+    self.towers[to] << self.towers[from].pop if valid?(from, to)
   end
 
   def valid?(from, to)
-    return true if self.towers[to].last.nil?
-    self.towers[to].last > self.towers[from].last
+    raise 'Tower is non-existent' unless [from, to].all? { |pos| pos.between?(0, 2) }
+    raise 'Tower is empty' if self.towers[from].empty?
+    raise 'That is the same tower!' if from == to
+    if self.towers[to].last.nil? || self.towers[to].last > self.towers[from].last
+      true
+    else
+      raise 'You cannot move atop a smaller disc!'
+    end
   end
 
   def won?
