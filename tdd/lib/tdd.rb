@@ -28,3 +28,21 @@ def my_transpose(array)
   end
   transposed
 end
+
+
+def stock_picker(stock_prices)
+  best_time = nil
+  biggest_profit = 0
+
+  stock_prices.each_index do |buy_date|
+    (buy_date + 1...stock_prices.length).each do |sell_date|
+      next if sell_date < buy_date
+      current_profit = stock_prices[sell_date] - stock_prices[buy_date]
+      if current_profit > biggest_profit
+        biggest_profit = current_profit
+        best_time = [buy_date, sell_date]
+      end
+    end
+  end
+  best_time
+end
