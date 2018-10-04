@@ -47,3 +47,47 @@ describe '#stock_picker' do
     expect(stock_picker(recession)).to be_nil
   end
 end
+
+describe TowersOfHanoi do
+  subject(:game) { TowersOfHanoi.new }
+
+  describe '#initialize' do
+    it "initializes with an array of 3 discs in an array and two empty arrays" do
+      expect(game.towers).to eq([[3, 2, 1], [], []])
+      expect(game.towers.count([])).to eq(2)
+    end
+  end
+
+  describe '#move' do
+    before(:each) { game.move(0, 1)}
+
+    it "removes the top disc from one tower to another" do
+      expect(game.towers).to eq([[3, 2], [1], []])
+    end
+
+    it "does not allow you to move to a tower with a smaller disc" do
+      expect{ game.move(0, 1) }.to raise_error('You cannot move atop a smaller disc!')
+    end
+
+    it "does not allow you to move to the same tower" do
+      expect{ game.move(0, 0) }.to raise_error("That is the same tower!")
+    end
+  end
+
+  describe '#won?' do
+    it "returns false if discs are together on one tower" do
+      expect(game.won?).to be_falsey
+    end
+
+    it "returns true if all discs are on one tower that isn't the first one" do
+      game.move(0, 1)
+      game.move(0, 2)
+      game.move(1, 2)
+      game.move(0, 1)
+      game.move(2, 0)
+      game.move(2, 1)
+      game.move(0, 1)
+      expect(game.won?).to be_truthy
+    end
+  end
+end

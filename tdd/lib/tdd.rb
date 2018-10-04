@@ -46,3 +46,30 @@ def stock_picker(stock_prices)
   end
   best_time
 end
+
+class TowersOfHanoi
+  attr_reader :towers
+
+  def initialize
+    @towers = [[3, 2, 1], [], []]
+  end
+
+
+  def move(from, to)
+    raise 'That is the same tower!' if from == to
+    if valid?(from, to)
+      self.towers[to] << self.towers[from].pop
+    else
+      raise 'You cannot move atop a smaller disc!'
+    end
+  end
+
+  def valid?(from, to)
+    return true if self.towers[to].last.nil?
+    self.towers[to].last > self.towers[from].last
+  end
+
+  def won?
+    self.towers[0].empty? && (self.towers[1].empty? || self.towers[2].empty?)
+  end
+end
